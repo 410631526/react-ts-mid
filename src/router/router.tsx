@@ -1,9 +1,17 @@
-import { createHashRouter } from "react-router";
-import App from '../view/App';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from '../view/home';
+import Insert from '../view/Insert';
 
-export const router = createHashRouter([
-    {
-        path: "/",
-        element: <App />,
-    },
-])
+const AppRouter: React.FC = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/insert" element={<Insert />} />
+      </Routes>
+    </Router>
+  );
+};
+
+export default AppRouter;
