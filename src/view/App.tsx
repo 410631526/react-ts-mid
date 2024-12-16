@@ -1,52 +1,35 @@
-import { useEffect, useRef, useState } from 'react'
-import '../style/App.css'
-import { asyncGet } from '../utils/fetch'
-import { api } from '../enum/api'
-import { Student } from '../interface/Student'
-import { resp } from '../interface/resp'
+import React, { useEffect, useState } from 'react';
+import { asyncGet } from '../utils/fetch';
+import { Student } from '../interface/Student';
 
-function App() {
-
-  const [students, setStudents] = useState<Array<Student>>([])
-
-  const cache = useRef<boolean>(false)
+const App: React.FC = () => {
+  const [students, setStudents] = useState<Student[]>([]);
 
   useEffect(() => {
-    /**
-     * 做緩存處理, 避免多次發起請求
-     */
-    if (!cache.current) {
-      cache.current = true;
-      asyncGet(api.findAll).then((res: resp<Array<Student>>) => {
-        if (res.code == 200) {
-          setStudents(res.body)
-        }
-      });
-    }
-  }, [])
-
-  const studentList = students ? students.map((student: Student) => {
-    return (
-      <div className='student' key={student._id}>
-        <p>帳號: {student.userName}</p>
-        <p>座號: {student.sid}</p>
-        <p>姓名: {student.name}</p>
-        <p>院系: {student.department}</p>
-        <p>年級: {student.grade}</p>
-        <p>班級: {student.class}</p>
-        <p>Email: {student.Email}</p>
-        <p>缺席次數: {student.absences ? student.absences : 0}</p>
-      </div>
-    )
-  }) : "loading"
+    const fetchStudents = async () => {
+      const data = await asyncGet('/students');
+      setStudents(data);
+    };
+    fetchStudents();
+  }, []);
 
   return (
-    <>
-      <div className="container">
-        {studentList}
-      </div>
-    </>
-  )
-}
+    <div>
+      <h1>學生列表</h1>
+      {students.map((student) => (
+        <div key={student.sid}>
+          <p>用戶名: {student.userName}</p>
+          <p>學號: {student.sid}</p>
+          <p>姓名: {student.name}</p>
+          <p>系所: {student.department}</p>
+          <p>年級: {student.grade}</p>
+          <p>班級: {student.class}</p>
+          <p>電子郵件: {student.Email}</p>
+          <p>缺勤次數: {student.absences || 0}</p>
+        </div>
+      ))}
+    </div>
+  );
+};
 
-export default App
+export default App;
