@@ -1,12 +1,43 @@
-// src/interface/Student.ts
 export interface Student {
+    _id: string;
+
+    /**
+     * 帳號
+     */
     userName: string;
+
+    /**
+     * 座號
+     */
     sid: string;
+
+    /**
+     * 姓名
+     */
     name: string;
+
+    /**
+     * 院系
+     */
     department: string;
+
+    /**
+     * 年級
+     */
     grade: string;
+
+    /**
+     * 班級
+     */
     class: string;
+
+    /**
+     * Email
+     */
     Email: string;
-    absences?: number; // 可選屬性，因為後端設定為非必填
-  }
-  
+
+    /**
+     * 缺席次數
+     */
+    absences?: number | undefined;
+}

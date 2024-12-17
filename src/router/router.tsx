@@ -1,17 +1,25 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from '../view/home';
-import Insert from '../view/Insert';
+import { createHashRouter } from "react-router-dom";
+import App from '../view/App';
+import AddStudent from "../view/AddStudent";
+import DeleteStudent from "../view/DeleteStudent";
+import UpdateStudent from "../view/UpdateStudent";
 
-const AppRouter: React.FC = () => {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/insert" element={<Insert />} />
-      </Routes>
-    </Router>
-  );
-};
 
-export default AppRouter;
+export const router = createHashRouter([
+  {
+    path: "/", 
+    element: <App />, 
+  },
+  {
+    path: "/add-student",
+    element: <AddStudent />, 
+  },
+  {
+    path: "/delete-student",
+    element: <DeleteStudent />,
+  },
+  {
+    path: "/update-student",
+    element: <UpdateStudent />,
+  },
+]);
